@@ -14,7 +14,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>  
         <div className="nav">
-          <img src="./bunny.jpg"></img>
           <ul>
             <Link href="/">Home</Link>
             <Link href="/specs">Specs</Link>

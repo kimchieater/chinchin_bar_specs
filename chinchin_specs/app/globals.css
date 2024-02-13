@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Sixtyfour&display=swap');
 
 *{
   margin:0;
@@ -7,24 +8,22 @@
 }
 
 .nav {
-  padding:20px;
+  padding:30px;
   width:100%;
-  max-width:1200px;
+  max-width: 600px;
   display:flex;
-  justify-content: space-between;
+  justify-content:space-between;
   align-items: center;
+  margin:auto;
 }
 
-.nav img {
-  width:100px;
-  height:auto;
-}
 
 .nav ul {
   display:flex;
   gap:100px;
-  width:50%;
-  justify-content: space-between;
+  width:100%;
+  justify-content: center;
+  text-align: center;
 }
 
 .nav ul a{
@@ -34,4 +33,14 @@
   font-size: 2em;
   text-decoration: none;
   color:black;
+}
+
+.home{
+  display:grid;
+  place-content: center;
+  place-items: center;
+  height:800px;
+  background-image: url("/hero-picture.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
 }

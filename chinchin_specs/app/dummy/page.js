@@ -6,11 +6,10 @@ export default async function Dummy(){
   const supabase = createServerComponentClient({ cookies })
 
   const { data: specs} = await supabase.from("specs").select();
-
+    
   return(
     <>
     <Button></Button>
-    <pre>{JSON.stringify(specs, null, 2)}</pre>
     </>
   
     

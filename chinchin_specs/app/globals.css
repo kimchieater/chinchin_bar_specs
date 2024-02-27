@@ -60,12 +60,16 @@ body{
   background-image: url("/hero-picture.jpg");
   background-repeat: no-repeat;
   background-position: center;
+  box-shadow: 2px 2px 20px var(--main-sub-color);
+  border: 3px solid var(--main-color);
+  border-radius: 9px;
 
 }
 
 .specs{
   padding:20px;
 }
+
 .search{
   text-align: center;
   padding:20px;
@@ -137,7 +141,6 @@ body{
   justify-content: center;
   align-items: center;
   gap:100px;
-
 }
 
 .leaderboard{
@@ -176,4 +179,67 @@ body{
   line-height: 3;
   color:var(--font-color);
   text-shadow: 2px 2px 5px var(--main-color);
+}
+
+.admin-bg{
+
+  height:750px;
+  width:90%;
+  padding:20px;
+  text-align: center;
+  color:var(--font-color);
+  border-radius: 9px;
+  margin:0 auto;
+}
+
+.admin-container{
+  width:inherit;
+  height: 90%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap:100px;
+  border-radius: 9px;
+  margin:0 auto;
+}
+
+.admin-cocktails{
+  height:90%;
+  width:100%;
+  border:1px solid green;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 20px var(--main-sub-color);
+  border:3px solid var(--main-color);
+  border-radius: 9px;
+}
+
+.admin-side-menu{
+  height:90%;
+  width:20%;
+  overflow-y:scroll;
+  border:3px solid var(--main-sub-color);
+  border-radius: 9px;
+  box-shadow: 2px 2px 20px var(--main-color);
+}
+
+.admin-side-menu p {
+  border-bottom: 1px solid grey;
+  cursor: pointer;
+}
+
+.admin-cocktail-info{
+  height:90%;
+  width:100%;
+  border:3px solid var(--main-sub-color);
+  padding:20px;
+  border-radius: 9px;
+  box-shadow: 2px 2px 20px var(--main-color);
+}
+
+
+
+.admin h1{
+  text-shadow: 2px 2px 5px var(--main-sub-color);
 }

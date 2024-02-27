@@ -1,22 +1,51 @@
 'use client';
-import {useState} from 'react';
+
+
+import { supabase } from '@/utils/supabaseClient';
+import {useState, useEffect} from 'react';
 export default function Button(){
-  const searchUp =  () =>{
-    console.log(search)
-  }
+  const [fetchError, setFetchError] = useState(null);
+  const [cocktails, setCocktails] = useState(null);
 
+  useEffect(()=>{
 
-  const typeCocktail = (key) => {
-    setSearch(key.target.value);
-    console.log(search);
-  }
-  let [search, setSearch] = useState(null);
+    const fetchCocktails = async()=>{
+      const { data, error } = await supabase
+      .from('specs')
+      .select()
 
+      if (error) {
+      setFetchError('Could not fetch the cocktails')
+      setCocktails(null);
+      console.log(error)
+    }
+    if (data){
+      setCocktails(data)
+      setFetchError(null);
+    }
+    }
+
+    fetchCocktails();
+  }, [])
+
+  console.log(cocktails);
   return(
-    <>    
-    <input type="text" onChange={typeCocktail}></input>
-    <button onClick={searchUp}>Click Me</button>
-    </>
+    <>
+    {fetchError && (<p>{fetchError}</p>)}
+    {cocktails  && (
+      <div className='cocktails'>
+        {
+          cocktails.map(cocktail =>
+            
+            (<p>{cocktail.cocktail_name}</p>)
+            
+          )
+        }
+      </div>
 
+    )}
+    <input type="text" name="cocktail_name" ></input>
+    <button>Search</button>
+    </>
   )
 }

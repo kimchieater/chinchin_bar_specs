@@ -28,7 +28,7 @@ export default function Button(){
     fetchCocktails();
   }, [])
 
-  console.log(cocktails);
+
   return(
     <>
     {fetchError && (<p>{fetchError}</p>)}

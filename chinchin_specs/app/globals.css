@@ -124,8 +124,7 @@ body{
 }
 
 .cocktail-info-container img{
-  height:auto;
-  width:auto;
+  width:200px;
 }
 
 .cocktail-info-section{
@@ -242,4 +241,28 @@ body{
 
 .admin h1{
   text-shadow: 2px 2px 5px var(--main-sub-color);
+}
+
+.admin-cocktail-info-section{
+  padding:20px;
+  line-height: 2;
+  letter-spacing: 2px;
+}
+.change-cocktail{
+  padding:20px;
+}
+
+.change-cocktail label, .add-cocktail label{
+  display:block;
+  padding:20px;
+  letter-spacing: 2px;
+}
+  
+.change-cocktail button, .add-cocktail button{
+  padding: 5px 10px;
+  border-radius: 9px;
+}
+
+span{
+  cursor: pointer;
 }

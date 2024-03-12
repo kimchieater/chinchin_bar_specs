@@ -1,40 +1,128 @@
 'use client';
 
-import {useState} from 'react';
+import { supabase } from '@/utils/supabaseClient';
+import {useEffect, useState} from 'react';
+
+
+
 
 export default function AdminCocktails({cocktails}){
+  const [updatedCocktails, setUpdatedCocktails] = useState(cocktails);
+  const [fetchError, setFetchError] = useState(null);
+  const [cocktail_name, setCocktail_name] = useState('');
+  const [specs, setSpecs] = useState('');
+  const [garnish, setGarnish] = useState('');
+  const [formError, setFormError] = useState(null);
 
-  let [id, setId] = useState(0);
+    let [id, setId] = useState(0);
+  const [deleteId, setDeleteId] = useState(0);
+  
+  
+
+
+  useEffect(()=>{
+    const fetchCocktails = async() => {
+      const {data: cocktail, error} = await supabase.from('specs').select();
+
+      if (error) {
+        setFetchError('Could not fetch cocktails')
+        setUpdatedCocktails(null);
+        console.log(fetchError);
+      }
+
+      if (cocktail) {
+        setUpdatedCocktails(cocktail)
+        setFetchError(null);
+      }
+    }
+
+    fetchCocktails();
+  }, [updatedCocktails])
+    
+  const handleDelete = async(cocktailId) =>{
+    console.log(cocktailId);
+
+    const {data, error} = await supabase
+    .from('specs')
+    .delete()
+    .eq('id', cocktailId)
+
+    if (error) {
+      console.log(error);
+    }
+    if (data){
+      console.log(data);
+      fetchCocktails();
+    }
+    
+    }
+
+
+  const handleSubmit = async(e) =>{
+
+    if (!cocktail_name || !specs || !garnish){
+      setFormError("Please fill in all the fields correct");
+      return
+    }
+
+    const {data, error} = await supabase 
+    .from('specs')
+    .insert([{cocktail_name, specs, garnish}]);
+
+    if (error) {
+      console.log(error)
+      setFormError('Please fill in all the fields correctly')
+    }
+    if (data) {
+      console.log(data);
+      setFormError(null);
+      fetchCocktails();
+    }
+  }
+
+
+
   return(
     <div className="admin-cocktails">
       <div className="admin-side-menu">
         {
-          cocktails.map((a,i)=>{
+          updatedCocktails.map((a,i)=>{
             return(
               <div>
               <p className="admin-cocktail-name" onClick={()=>{
                 setId(i);
-                console.log(id);
-              }}>{a.cocktail_name}</p>
+
+              }}>{a.cocktail_name}</p> <i onClick={()=> handleDelete(a.id)}>X</i>
               </div>
             )
           })
         }
       </div>
       <div className="admin-cocktail-info">
-        <h3>{cocktails[id].cocktail_name}</h3>
-        <h5>{cocktails[id].specs}</h5>
+        <div className='admin-cocktail-info-section'>
+          <h3>{updatedCocktails[id].cocktail_name}</h3>
+        <h5>{updatedCocktails[id].specs}</h5>
+        <h5>{updatedCocktails[id].garnish}</h5>
+        </div>
+        
         <form className='change-cocktail'>
+        <label>Chage cocktail</label>
         <input type="text" name="cocktail_name" className='admin-cocktail-info-name' placeholder="change the name"></input>
         <input type="text" name="specs" className='admin-cocktail-info-specs' placeholder='change the specs'></input>
+        <input type="text" name="garnish" className="admin-cocktail-info-garnish" placeholder="change the garnish"></input>
         <button type="submit">Change</button>
         </form>
 
-        <form className="add-cocktail" method='POST' action='/api/addSpecs'>
-        <label>Add a Cocktail</label>
-        <input type="text" name="cocktail_name" className='admin-cocktail-info-name' placeholder="add the name"></input>
-        <input type="text" name="specs" className='admin-cocktail-info-specs' placeholder='add the specs'></input>
+        <form className="add-cocktail" onSubmit={handleSubmit}>
+        <label htmlFor="cocktail_name">Add Cocktail</label>
+        <input type="text" name="cocktail_name" className='admin-cocktail-info-name' value={cocktail_name} onChange={(e)=>setCocktail_name(e.target.value)} placeholder="add the name"></input>
+        <label htmlFor="specs">Add specs</label>
+        <input type="text" name="specs" className='admin-cocktail-info-specs' placeholder='add the specs' value={specs} onChange={(e)=>setSpecs(e.target.value)}></input>
+        <label htmlFor='garnish'>Add garnish</label>
+        <input type="text" name="garnish" className="admin-cocktail-info-garnish" placeholder="add the garnish" value={garnish} onChange={(e)=>setGarnish(e.target.value)}></input>
         <button type="submit">Add</button>
+
+        {formError && <p className='error'>{formError}</p>}
         </form>
         
       </div>

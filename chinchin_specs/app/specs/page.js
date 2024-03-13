@@ -5,29 +5,6 @@ import { supabase } from '@/utils/supabaseClient';
 export default function Specs(){
   const [specs, setSpecs] = useState([]);
 
-  useEffect(() => {
-
-    const {data, error} = supabase.from('specs').select()
-
-    if (error){
-      console.log(error)
-    } 
-    if (data){
-      setSpecs(data)
-    }
-    
-  const channels = supabase.channel('custom-all-channel')
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'specs' },
-    (payload) => {
-      console.log('Change received!', payload)
-    }
-  )
-  .subscribe()
-  }, []);
-
-  console.log(specs)
   
   return(
     <div className="specs">

@@ -223,10 +223,14 @@ body{
   box-shadow: 2px 2px 20px var(--main-color);
 }
 
-.admin-side-menu p {
-  border-bottom: 1px solid grey;
-  cursor: pointer;
+.admin-cocktail-section{
+  border-bottom: 1px solid var(--font-color);
 }
+.admin-side-menu p {
+  cursor: pointer;
+  display:inline;
+}
+
 
 .admin-cocktail-info{
   height:90%;
@@ -263,6 +267,6 @@ body{
   border-radius: 9px;
 }
 
-span{
+i{
   cursor: pointer;
 }

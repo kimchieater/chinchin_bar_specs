@@ -6,8 +6,8 @@ import {useEffect, useState} from 'react';
 
 
 
-export default function AdminCocktails({cocktails}){
-  const [updatedCocktails, setUpdatedCocktails] = useState(cocktails);
+export default function AdminCocktails(){
+  const [updatedCocktails, setUpdatedCocktails] = useState([{id:0, cocktail_name:"", specs:"", garnish:"",}]);
   const [fetchError, setFetchError] = useState(null);
   const [cocktail_name, setCocktail_name] = useState('');
   const [specs, setSpecs] = useState('');
@@ -37,8 +37,22 @@ export default function AdminCocktails({cocktails}){
     }
 
     fetchCocktails();
+    channels();
   }, [updatedCocktails])
-    
+
+
+
+  const channels = ()=> {supabase.channel('custom-all-channel')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'specs' },
+      (payload) => {
+        console.log('Change received!', payload)
+      }
+    )
+    .subscribe()
+    }
+
   const handleDelete = async(cocktailId) =>{
     console.log(cocktailId);
 
@@ -88,7 +102,7 @@ export default function AdminCocktails({cocktails}){
         {
           updatedCocktails.map((a,i)=>{
             return(
-              <div>
+              <div className='admin-cocktail-section'>
               <p className="admin-cocktail-name" onClick={()=>{
                 setId(i);
 
@@ -121,7 +135,7 @@ export default function AdminCocktails({cocktails}){
         <label htmlFor='garnish'>Add garnish</label>
         <input type="text" name="garnish" className="admin-cocktail-info-garnish" placeholder="add the garnish" value={garnish} onChange={(e)=>setGarnish(e.target.value)}></input>
         <button type="submit">Add</button>
-
+        
         {formError && <p className='error'>{formError}</p>}
         </form>
         

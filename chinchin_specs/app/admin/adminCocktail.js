@@ -120,15 +120,7 @@ export default function AdminCocktails(){
         </div>
 
         <div className='form-container'>
-        <form className='change-cocktail'>
-        <label>Chage cocktail</label>
-        <input type="text" name="cocktail_name" className='admin-cocktail-info-name' placeholder="change the name"></input>
-        <label htmlFor="specs">Change specs</label>
-        <input type="text" name="specs" className='admin-cocktail-info-specs' placeholder='change the specs'></input>
-        <label htmlFor='garnish'>Change garnish</label>
-        <input type="text" name="garnish" className="admin-cocktail-info-garnish" placeholder="change the garnish"></input>
-        <button type="submit">Change</button>
-        </form>
+        
 
         <form className="add-cocktail" onSubmit={handleSubmit}>
         <label htmlFor="cocktail_name">Add Cocktail</label>

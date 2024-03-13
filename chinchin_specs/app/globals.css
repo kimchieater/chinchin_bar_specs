@@ -111,6 +111,24 @@ body{
   border-radius: 9px;
 }
 
+.specs-cocktail-info-container{
+  border:1px red solid;
+  display:flex;
+}
+
+.specs-cocktail-info-scroll{
+  border:1px pink solid;
+  width:30%;
+  overflow-y:scroll;
+}
+
+.specs-cocktail-info-scroll p {
+  color:var(--font-color);
+  border-bottom: 1px solid var(--font-color);
+  padding:10px;
+  cursor: pointer;
+}
+
 .cocktail-info h2 {
   color: var(--font-color);
   text-shadow: 2px 2px 10px var(--main-color);

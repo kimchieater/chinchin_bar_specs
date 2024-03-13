@@ -118,11 +118,14 @@ export default function AdminCocktails(){
         <h5>{updatedCocktails[id].specs}</h5>
         <h5>{updatedCocktails[id].garnish}</h5>
         </div>
-        
+
+        <div className='form-container'>
         <form className='change-cocktail'>
         <label>Chage cocktail</label>
         <input type="text" name="cocktail_name" className='admin-cocktail-info-name' placeholder="change the name"></input>
+        <label htmlFor="specs">Change specs</label>
         <input type="text" name="specs" className='admin-cocktail-info-specs' placeholder='change the specs'></input>
+        <label htmlFor='garnish'>Change garnish</label>
         <input type="text" name="garnish" className="admin-cocktail-info-garnish" placeholder="change the garnish"></input>
         <button type="submit">Change</button>
         </form>
@@ -138,7 +141,7 @@ export default function AdminCocktails(){
         
         {formError && <p className='error'>{formError}</p>}
         </form>
-        
+        </div>
       </div>
     </div>
   )

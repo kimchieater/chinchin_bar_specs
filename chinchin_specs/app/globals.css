@@ -226,6 +226,8 @@ body{
 .admin-cocktail-section{
   border-bottom: 1px solid var(--font-color);
 }
+
+
 .admin-side-menu p {
   cursor: pointer;
   display:inline;
@@ -269,4 +271,16 @@ body{
 
 i{
   cursor: pointer;
+}
+
+.form-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container button{
+  display:block;
+  margin:0 auto;
+  margin-top:10px;
 }

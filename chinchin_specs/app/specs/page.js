@@ -1,34 +1,21 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
+import GetCocktails from './getCocktails';
+import fetchCocktails from './fetchCocktails';
+
+
 
 export default function Specs(){
-  const [cocktails, setCocktails] = useState([]);
-
+  const [cocktails, setCocktails] = useState([{id:0, cocktail_name:"", specs:"", garnish:"",}]);
+  const [passId, SetPassId] = useState(0);
   useEffect(()=>{
-    const fetchCocktails = async () => {
-      const { data, error } = await supabase
-      .from('specs')
-      .select('*');
-
-      if (error) {
-        console.log("error", error)
-      }
-
-      if(data) {
-        console.log("succesful")
-        setCocktails(data);
-      }
-
-
-    } 
     fetchCocktails();
+  },[cocktails])
 
-  },[])
+  console.log(cocktails)
 
 
-    console.log(cocktails)
-  
   return(
     <div className="specs">
       <div className="search">
@@ -49,9 +36,7 @@ export default function Specs(){
           </div>
             <div className="cocktail-info-container">
               <div className="cocktail-info-section">
-                <h3>Old Fashioned</h3>
-                <p>60ml VODKA 30ml HENESSEY 30ml CHAMBORD 60ml SUGAR SYRUP</p>
-                <p>Orange Twist in rocks glass</p>
+                {<GetCocktails cocktails={cocktails} passId={passId}></GetCocktails>}
               </div>
             </div>
           </div>

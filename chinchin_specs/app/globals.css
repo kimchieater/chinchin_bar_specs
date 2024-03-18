@@ -302,3 +302,7 @@ i{
   margin:0 auto;
   margin-top:10px;
 }
+
+.specs-cocktail-info-container{
+  overflow-y:scroll;
+}

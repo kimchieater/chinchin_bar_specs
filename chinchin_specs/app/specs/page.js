@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 
 export default function Specs(){
-  const [specs, setSpecs] = useState([]);
+  const [cocktails, setCocktails] = useState([]);
 
   useEffect(()=>{
     const fetchCocktails = async () => {
-      const { data: spec, error } = await supabase
+      const { data, error } = await supabase
       .from('specs')
       .select('*');
 
@@ -15,9 +15,9 @@ export default function Specs(){
         console.log("error", error)
       }
 
-      if(spec) {
+      if(data) {
         console.log("succesful")
-        setSpecs(spec);
+        setCocktails(data);
       }
 
 
@@ -27,7 +27,7 @@ export default function Specs(){
   },[])
 
 
-    console.log(specs)
+    console.log(cocktails)
   
   return(
     <div className="specs">
@@ -39,7 +39,13 @@ export default function Specs(){
         <h2>Search Cocktails</h2>
         <div className='specs-cocktail-info-container'>
           <div className='specs-cocktail-info-scroll'>
-            <p>cocktail</p>
+            {
+              cocktails.map((a,i)=>{
+                return(
+                  <p>{a.cocktail_name}</p>
+                )                
+              })
+            }
           </div>
             <div className="cocktail-info-container">
               <div className="cocktail-info-section">

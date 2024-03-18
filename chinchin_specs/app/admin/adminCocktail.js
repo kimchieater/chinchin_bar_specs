@@ -13,7 +13,6 @@ export default function AdminCocktails(){
   const [specs, setSpecs] = useState('');
   const [garnish, setGarnish] = useState('');
   const [formError, setFormError] = useState(null);
-
     let [id, setId] = useState(0);
   const [deleteId, setDeleteId] = useState(0);
   

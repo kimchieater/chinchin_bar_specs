@@ -99,8 +99,8 @@ body{
   cursor: pointer;
   color: var(--bg-color);
   text-shadow: 2px 2px var(--main-color);
-  
 }
+
 .cocktail-info{
   text-align: center;
   padding:20px;
@@ -113,14 +113,18 @@ body{
 }
 
 .specs-cocktail-info-container{
-  border:1px red solid;
   display:flex;
+  align-items: center;
+  justify-content: space-around;
+  padding:20px;
+  margin-top:60px;
 }
 
 .specs-cocktail-info-scroll{
   border:1px pink solid;
   width:30%;
   overflow-y:scroll;
+  max-height: 200px;
 }
 
 .specs-cocktail-info-scroll p {
@@ -128,6 +132,7 @@ body{
   border-bottom: 1px solid var(--font-color);
   padding:10px;
   cursor: pointer;
+
 }
 
 .cocktail-info h2 {
@@ -142,15 +147,19 @@ body{
   align-items: center;
 }
 
-.cocktail-info-container img{
-  width:200px;
-}
+
 
 .cocktail-info-section{
   color:var(--font-color);
   flex-basis: 50%;
   height:80%;
   line-height:3;
+  text-align: left;
+  min-width:300px;
+  border:blue solid 2px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .quiz-bg{
@@ -262,8 +271,6 @@ body{
   box-shadow: 2px 2px 20px var(--main-color);
 }
 
-
-
 .admin h1{
   text-shadow: 2px 2px 5px var(--main-sub-color);
 }
@@ -304,6 +311,3 @@ i{
   margin-top:10px;
 }
 
-.specs-cocktail-info-container{
-  overflow-y:scroll;
-}

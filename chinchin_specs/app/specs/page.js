@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 import Defaultstate from './defaultState';
+import GetCocktails from './getCocktails';
 
 
 
@@ -29,17 +30,15 @@ export default function Specs(){
     fetchCocktails();
   },[cocktails])
 
-  function fetchSpec(id){
 
-  }
-
-  console.log(cocktails)
 
 
   return(
     <div className="specs">
       <div className="search">
-        <input className="search-input" name="search-input" type="text"></input>
+        <input className="search-input" name="search-input" type="text" onChange={(e)=>{
+          
+        }}></input>
         <button className="search-button">Search</button>
       </div>
       <div className="cocktail-info">
@@ -49,7 +48,9 @@ export default function Specs(){
             {
               cocktails.map((a,i)=>{
                 return(
-                  <p onClick={()=>fetchSpec(a.id)}>{a.cocktail_name}</p>
+                  <p onClick={()=>{
+                    SetPassId(i)
+                  }}>{a.cocktail_name}</p>
                 )                
               })
             }
@@ -57,7 +58,7 @@ export default function Specs(){
             <div className="cocktail-info-container">
               <div className="cocktail-info-section">
                 {
-                  cocktails.length === 0 ? <Defaultstate/> : <p>Try me</p>
+                  cocktails.length === 0 ? <Defaultstate/> : <GetCocktails cocktails={cocktails} passId={passId}/>
                 }                
               </div>
             </div>

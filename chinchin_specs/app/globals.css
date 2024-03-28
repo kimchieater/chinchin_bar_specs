@@ -233,11 +233,18 @@ body{
   text-shadow: 2px 2px 5px var(--main-color);
 }
 
-.admin-bg{
+.quiz-timer{
+  color:var(--font-color);
+  font-size:30px;
+  text-align: center;
+  margin-top:10px;
+}
 
+
+.admin-bg{
   height:750px;
   width:90%;
-  padding:20px;
+  padding:10px;
   text-align: center;
   color:var(--font-color);
   border-radius: 9px;

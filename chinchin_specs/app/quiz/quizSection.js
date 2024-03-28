@@ -1,20 +1,22 @@
 'use client'
 
 import { supabase } from "@/utils/supabaseClient"
+import { useEffect, useState } from "react"
 
 
+export default function QuizSection({cocktails, randomNum, chooseRandomNum, usedRandomNum}){
+
+  
 
 
-
-export default function QuizSection(){
   return(
     <div className="quizSection">
-      <h3>QUESTION</h3>
+      <h3>{cocktails[randomNum].cocktail_name}</h3>
           <div className="quiz-section-options">
-          <p>1 awdawdawdadwadawdawdawd </p>
-          <p>2 awdawdawdawdawdawdawdawd</p>
-          <p>3 awdawdawdawdawdawdawdawda </p>
-          <p>4 awdawdawdawdawdawdawdawdaw</p>
+          <p>1. awdawdawdawd</p>
+          <p>2 aawawdawd</p>
+          <p>3 awd </p>
+          <p>4 awdad </p>
           </div>
     </div>
   )

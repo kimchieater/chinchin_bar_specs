@@ -168,11 +168,31 @@ body{
 }
 
 .quiz-bg{
-  height: 750px;
+  height: 650px;
   display:flex;
   justify-content: center;
   align-items: center;
   gap:100px;
+}
+
+.quiz-input{
+  display:flex;
+  justify-content: center;
+  margin-top:40px;
+  min-width: 500px;
+}
+
+.quiz-input input{
+  padding:5px;
+  border-radius:9px;
+  margin-right:10px;
+  font-size:20px;
+}
+
+.quiz-input button{
+  padding:5px;
+  border-radius:9px;
+  font-size:20px;
 }
 
 .leaderboard{

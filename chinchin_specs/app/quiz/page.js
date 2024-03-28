@@ -1,13 +1,27 @@
+'use client'
+
+import { supabase } from "@/utils/supabaseClient"
+import { useEffect, useState } from "react"
 
 
 export default function Quiz(){
+
+  const [name, setName] = useState(null);
+
+  function chooseName(e){
+    setName(e.target.value)
+  
+  }
+
+
   return(
     <div className="quiz">
       <div className="quiz-bg">
+        <div className="quiz-name-input">
+          <input type="text" onChange={chooseName}></input>
+        </div>
         <div className="leaderboard">
           <h2>Leaderboard</h2>
-          <h4>1. Leo</h4>
-          <h4>2. Spike</h4>
         </div>
         <div className="quiz-section">
           <h3>QUESTION</h3>

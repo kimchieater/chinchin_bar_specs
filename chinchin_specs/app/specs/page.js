@@ -10,9 +10,10 @@ import GetCocktails from './getCocktails';
 
 export default function Specs(){
   const [cocktails, setCocktails] = useState([]);
-  const [passId, SetPassId] = useState(0);
+  const [passId, setPassId] = useState(0);
   const [search, setSearch] = useState(null);
   const [searchedCocktails, setSerachedCocktails] = useState([]);
+  const [searched, setSearched] = useState(false);
 
   useEffect(()=>{
     async function fetchCocktails(){
@@ -31,7 +32,7 @@ export default function Specs(){
     }
 
     fetchCocktails();
-  },[cocktails])
+  },[])
 
   async function searchCocktails(){
       if (!search){
@@ -50,8 +51,8 @@ export default function Specs(){
 
         if (foundCocktails) {
           console.log("Cocktails match search:", foundCocktails);
-          setCocktails(foundCocktails);
-          console.log(cocktails);
+          setSerachedCocktails(foundCocktails);
+          
         }
       } 
       
@@ -74,7 +75,7 @@ export default function Specs(){
         }}></input>
         <button className="search-button" type="submit" 
         onClick={()=>{
-          console.log(search);
+          searchCocktails()
         }}
         
         >Search</button>
@@ -87,7 +88,8 @@ export default function Specs(){
               cocktails.map((a,i)=>{
                 return(
                   <p onClick={()=>{
-                    SetPassId(i)
+                    setPassId(i);
+                    setSerachedCocktails([]);
                   }}>{a.cocktail_name}</p>
                 )                
               })
@@ -96,7 +98,7 @@ export default function Specs(){
             <div className="cocktail-info-container">
               <div className="cocktail-info-section">
                 {
-                  cocktails.length === 0 ? <Defaultstate/> : <GetCocktails cocktails={cocktails} passId={passId}/>
+                  cocktails.length === 0 ? <Defaultstate/> : <GetCocktails cocktails={cocktails} passId={passId} searchedCocktails={searchedCocktails}/>
                 }                
               </div>
             </div>

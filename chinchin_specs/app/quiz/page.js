@@ -13,7 +13,6 @@ export default function Quiz(){
   const [nameIn, setNameIn] = useState(false);
   const [nameVis, setNameVis]= useState("visible");
   
-  const [cocktails, setCocktails] = useState([]);
 
 
   const [timer, setTimer] = useState(30);
@@ -21,31 +20,10 @@ export default function Quiz(){
   const [timerVis, setTimerVis] = useState("hidden");
   const [btnClicked, setBtnClicked] = useState(false);
 
-  const [randomNum, setRandomNum] = useState();
+
   let usedRandomNum = [];
 
-
   //functions
-
-  useEffect(()=>{
-    async function fetchCocktails(){
-      try{
-        const {data:specs, error} = await supabase
-        .from('specs')
-        .select('*')
-
-        if (specs){
-          setCocktails(specs);
-        }
-
-        if (error) throw error;
-
-      } catch(error){
-        console.log(error)
-      }
-    }
-      fetchCocktails();
-  },[]);
 
   function chooseName(e){
     setName(e.target.value)
@@ -55,22 +33,12 @@ export default function Quiz(){
     timerStart();
   }
 
-  function chooseRandomNum(){
-    const randomInt = Math.floor(Math.random() * cocktails.length);
-    setRandomNum(randomInt);
-    usedRandomNum.push(randomInt);
-  }
-
-  
-
   function timerStart(){
     setTimerHidden(false);
     setTimerVis("visible");
     setBtnClicked(true);
     setNameVis("hidden");
     setTimer(30);
-    chooseRandomNum();
-
 
     const intervalId = setInterval(()=>{
       setTimer((prevTimer) =>{
@@ -85,7 +53,6 @@ export default function Quiz(){
 
     return () => clearInterval(intervalId);
   }
-
 
   return(
     <div className="quiz">
@@ -110,7 +77,7 @@ export default function Quiz(){
         </div>
         <div className="quiz-section">
           {
-            btnClicked === false ? <StartQuizSection /> : <QuizSection cocktails={cocktails} randomNum={randomNum} chooseRandomNum={chooseRandomNum} usedRandomNum={usedRandomNum}/>
+            btnClicked === false ? <StartQuizSection /> : <QuizSection  usedRandomNum={usedRandomNum}/>
           }
         </div>
       </div>

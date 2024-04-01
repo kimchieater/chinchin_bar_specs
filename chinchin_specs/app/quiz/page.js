@@ -21,7 +21,6 @@ export default function Quiz(){
   const [btnClicked, setBtnClicked] = useState(false);
 
 
-  let usedRandomNum = [];
 
   //functions
 
@@ -45,7 +44,7 @@ export default function Quiz(){
         if (prevTimer <= 0){
           clearInterval(intervalId);
           setTimerVis("hidden"); 
-          usedRandomNum = [];
+
         }
         return prevTimer - 1;
       })
@@ -53,6 +52,7 @@ export default function Quiz(){
 
     return () => clearInterval(intervalId);
   }
+
 
   return(
     <div className="quiz">
@@ -77,7 +77,7 @@ export default function Quiz(){
         </div>
         <div className="quiz-section">
           {
-            btnClicked === false ? <StartQuizSection /> : <QuizSection  usedRandomNum={usedRandomNum}/>
+            btnClicked === false ? <StartQuizSection /> : <QuizSection/>
           }
         </div>
       </div>

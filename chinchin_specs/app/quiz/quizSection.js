@@ -1,13 +1,16 @@
 'use client'
 
 import { supabase } from "@/utils/supabaseClient"
+import next from "next";
 import { useEffect, useState } from "react"
 
 
-export default function QuizSection({usedRandomNum}){
+export default function QuizSection(){
 
   const [cocktails, setCocktails] = useState([]);
-  const [nextQuestion, setNextQuestion] = useState(0)
+  const [currentQuestion, setCurrentQuestions] = useState(0);
+  const [selections, setSelections] = useState([]);
+  
 
   useEffect(()=>{
     //the Fisher-Yates shuffle algo
@@ -19,20 +22,41 @@ export default function QuizSection({usedRandomNum}){
       .select('*')
 
       if (specs){
-        sortSelection(specs);
-        setCocktails(specs);
+        const shuffled = sortSelection(specs);
+        setCocktails(shuffled);
+        const count = 4;
+        const randomQs = randomQuestions(shuffled, count, currentQuestion)
+        sortSelection(randomQs);
+        setSelections(randomQs);
+
       }
-      if (error) throw error;
       } catch (error){
         console.log(error)
       }
     }
+
       fetchCocktails();
   },[])
 
-  function randomQuestions(){
-    
+  console.log(selections);
+  function randomQuestions(cocktails, count, currentQuestion){
+    let randomQs = [cocktails[currentQuestion].specs];
+    let pickRandomNum = new Set([currentQuestion]);
+
+    while (pickRandomNum.size < count  + 1) {
+      let randomInt = Math.floor(Math.random() * cocktails.length);
+      pickRandomNum.add(randomInt);
   }
+
+  pickRandomNum = [...pickRandomNum].filter(index => index !== currentQuestion);
+
+  pickRandomNum.slice(0, count - 1).forEach(index =>{
+    randomQs.push(cocktails[index].specs);
+  })
+
+  return randomQs;
+  }
+
 
   function sortSelection(array){
       for (let i = array.length - 1; i > 0; i--) {
@@ -45,17 +69,19 @@ export default function QuizSection({usedRandomNum}){
       return array;
     }
 
+    console.log(selections);
   return(
     <div className="quizSection">
       {
         cocktails.length === 0 ? <p>Loading</p> : (
           <>
-          <h3>{cocktails[nextQuestion].cocktail_name}</h3>
+          <h3>{cocktails[currentQuestion].cocktail_name}</h3>
           <div className="quiz-section-options">
-          <p>1. awdawdawdawd</p>
-          <p>2 aawawdawd</p>
-          <p>3 awd </p>
-          <p>4 awdad </p>
+          <p>{selections[0]}</p>
+          <p>{selections[1]}</p>
+          <p>{selections[2]}</p>
+          <p>{selections[3]}</p>
+          
           </div>
           <button>Click me</button>
           </>

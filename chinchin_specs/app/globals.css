@@ -214,6 +214,10 @@ body{
   border:2px solid var(--main-color);
 }
 
+.leaderboard h3{
+  margin-top:20px;
+}
+
 .quiz-section{
   height:70%;
   width:40%;

@@ -68,7 +68,7 @@ export default function Quiz(){
     setTimerVis("visible");
     setBtnClicked(true);
     setNameVis("hidden");
-    setTimer(30);
+    setTimer(2);
 
       intervalIdRef.current = setInterval(() => {
     setTimer(prevTimer => {
@@ -77,6 +77,7 @@ export default function Quiz(){
         intervalIdRef.current = null; // Clear the ref
         setTimerVis("hidden");
         setCountVis("visible");
+        setBtnClicked(false);
         return 0; // Stop the timer
       }
 
@@ -126,6 +127,7 @@ console.log(leaderboardData);
         <div className="quiz-name-input" style={{visibility:nameVis}}>
           <input type="text" onChange={chooseName} placeholder="Write Your Name"></input>
           <button onClick={startQuiz}>Start Quiz</button>
+
           <div style={{visibility:countVis}} className="quiz-end-info">
             <h2>{name}, You have Scored {count} points</h2>
             <button onClick={submitScore} disabled={submitClicked}>Submit</button>
@@ -148,7 +150,7 @@ console.log(leaderboardData);
             leaderboardData.map((a,i)=>{
               return(
                 <div>
-                  <h3>{a.name}  {a.count}</h3>
+                  <h3>{a.name} {a.count}</h3>
                 </div>
               )
             }

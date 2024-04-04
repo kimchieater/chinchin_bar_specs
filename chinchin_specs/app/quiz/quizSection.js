@@ -5,18 +5,19 @@ import next from "next"
 import { useEffect, useState } from "react"
 
 
-export default function QuizSection({name, count, incrementCount, setCount}){
+export default function QuizSection({name, count, setCount, submitScore, timer, onCountChange}){
 
   const [cocktails, setCocktails] = useState([]);
   const [currentQuestion, setCurrentQuestions] = useState(0);
   const [selections, setSelections] = useState([]);
 
-  
+  const [timerEnded, setTimerEnded] = useState(false);
 
-  
-  const [rightWrong, setRightWrong] = useState([null]);
+  const [rightWrong, setRightWrong] = useState(null);
+
   useEffect(()=>{
-    //the Fisher-Yates shuffle algo
+
+
     
     async function fetchCocktails(){
       try {
@@ -41,6 +42,10 @@ export default function QuizSection({name, count, incrementCount, setCount}){
       fetchCocktails();
   },[])
 
+  function increment(){
+    const newCount = count + 1;
+    onCountChange(newCount);
+  }
 
   function randomQuestions(cocktails, count, currentQuestion){
     let randomQs = [cocktails[currentQuestion].specs];
@@ -60,7 +65,7 @@ export default function QuizSection({name, count, incrementCount, setCount}){
   return randomQs;
   }
 
-
+    //the Fisher-Yates shuffle algo
   function sortSelection(array){
       for (let i = array.length - 1; i > 0; i--) {
         // Generate a random index from 0 to i
@@ -75,8 +80,7 @@ export default function QuizSection({name, count, incrementCount, setCount}){
     function correctAnswer(){
 
       setRightWrong("green");
-      incrementCount();
-
+      increment();
       setTimeout(()=>{
         setCurrentQuestions(prev => {
           const nextQustionIndex = (prev + 1) % cocktails.length
@@ -96,7 +100,7 @@ export default function QuizSection({name, count, incrementCount, setCount}){
     }
 
     function incorrectAnswer(){
-      const timeOut = setTimeout(()=>{
+      setTimeout(()=>{
         setRightWrong("red");
 
         setTimeout(()=>{

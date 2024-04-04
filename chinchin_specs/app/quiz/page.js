@@ -16,17 +16,20 @@ export default function Quiz(){
 
   const [countVis, setCountVis] = useState("hidden");
 
- 
+  const [leaderboardData, setLeaderboardData] = useState([]);
+
   const [timer, setTimer] = useState(30);
   const [timerHidden, setTimerHidden] = useState(true);
   const [timerVis, setTimerVis] = useState("hidden");
   const [btnClicked, setBtnClicked] = useState(false);
 
+  const [submitClicked, setSubmitClicked] = useState(false);
+
   const intervalIdRef = useRef(null);
   //functions
 
-  function incrementCount(){
-    setCount(prev => prev + 1);
+  function handleCountChange(newCount){
+    setCount(newCount);
   }
 
   function chooseName(e){
@@ -45,45 +48,76 @@ export default function Quiz(){
         {name: name, count: count}
       ]);
 
-      if (error) throw error;
-
-      console.log('submitted', data)
+      setSubmitClicked(true);
+      console.log("submitted")
     } catch (error){
       console.error('Error', error)
     }
   }
 
 
-
   function timerStart(){
 
     if (intervalIdRef.current) return;
+    if (name === null){
+      alert("Please write your name");
+      return
+    }
 
     setTimerHidden(false);
     setTimerVis("visible");
     setBtnClicked(true);
     setNameVis("hidden");
-    setTimer(2);
+    setTimer(30);
 
-    intervalIdRef.current = setInterval(()=>{
-      setTimer((prevTimer) =>{
-        if (prevTimer <= 0){
-          clearInterval(intervalIdRef);
-          intervalIdRef.current = null;
-          setTimerVis("hidden"); 
-          setCountVis("visible");
-          submitScore();
-          return 0;
-        }
-        return prevTimer - 1;
-      })
-    }, 1000);
+      intervalIdRef.current = setInterval(() => {
+    setTimer(prevTimer => {
+      if (prevTimer ===0) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null; // Clear the ref
+        setTimerVis("hidden");
+        setCountVis("visible");
+        return 0; // Stop the timer
+      }
 
-    return () => {
+      return prevTimer - 1;
+    });
+  }, 1000);
+}
 
+// Cleanup on component unmount
+useEffect(() => {
+  return () => {
+    if (intervalIdRef.current) {
+      clearInterval(intervalIdRef.current);
     }
-  }
+  };
+}, []);
 
+useEffect(()=>{
+  async function fetchQuizData(){
+
+    try{
+      const {data:quiz, error} = await supabase
+    .from('quiz')
+    .select('*')
+    .order('count', {ascending:false})
+    .limit(3);
+
+    if (quiz){
+      setLeaderboardData(quiz);
+    }
+    } catch(error) {
+      console.log(error);
+    }
+    
+  }
+  fetchQuizData();
+
+
+},[])
+
+console.log(leaderboardData);
 
   return(
     <div className="quiz">
@@ -92,7 +126,11 @@ export default function Quiz(){
         <div className="quiz-name-input" style={{visibility:nameVis}}>
           <input type="text" onChange={chooseName} placeholder="Write Your Name"></input>
           <button onClick={startQuiz}>Start Quiz</button>
-          <h2 style={{visibility:countVis}}>{name}, You have Scored {count} points</h2>
+          <div style={{visibility:countVis}} className="quiz-end-info">
+            <h2>{name}, You have Scored {count} points</h2>
+            <button onClick={submitScore} disabled={submitClicked}>Submit</button>
+          </div>
+
         </div>
       </div>
 
@@ -106,10 +144,20 @@ export default function Quiz(){
       <div className="quiz-bg">
         <div className="leaderboard">
           <h2>Leaderboard</h2>
+          {
+            leaderboardData.map((a,i)=>{
+              return(
+                <div>
+                  <h3>{a.name}  {a.count}</h3>
+                </div>
+              )
+            }
+            )
+          }
         </div>
         <div className="quiz-section">
           {
-            btnClicked === false ? <StartQuizSection /> : <QuizSection name={name} count={count} setCount={setCount} incrementCount={incrementCount}/>
+            btnClicked === false ? <StartQuizSection /> : <QuizSection name={name} count={count} setCount={setCount}  submitScore={submitScore} timer={timer} onCountChange={handleCountChange}/>
           }
         </div>
       </div>

@@ -189,6 +189,11 @@ body{
   font-size:20px;
 }
 
+.quiz-input h2{
+  color:var(--font-color);
+  text-shadow: 2px 2px 5px var(--main-color);
+}
+
 .quiz-input button{
   padding:5px;
   border-radius:9px;
@@ -220,6 +225,10 @@ body{
   font-size: 20px;
   box-shadow: 2px 2px 20px var(--main-sub-color);
   border-radius: 9px;
+}
+
+.quiz-section p {
+  cursor: pointer;
 }
 
 .quiz-section-options{

@@ -1,17 +1,20 @@
 'use client'
 
 import { supabase } from "@/utils/supabaseClient"
-import next from "next";
+import next from "next"
 import { useEffect, useState } from "react"
 
 
-export default function QuizSection(){
+export default function QuizSection({name, count, incrementCount, setCount}){
 
   const [cocktails, setCocktails] = useState([]);
   const [currentQuestion, setCurrentQuestions] = useState(0);
   const [selections, setSelections] = useState([]);
+
   
 
+  
+  const [rightWrong, setRightWrong] = useState([null]);
   useEffect(()=>{
     //the Fisher-Yates shuffle algo
     
@@ -38,7 +41,7 @@ export default function QuizSection(){
       fetchCocktails();
   },[])
 
-  console.log(selections);
+
   function randomQuestions(cocktails, count, currentQuestion){
     let randomQs = [cocktails[currentQuestion].specs];
     let pickRandomNum = new Set([currentQuestion]);
@@ -69,22 +72,68 @@ export default function QuizSection(){
       return array;
     }
 
-    console.log(selections);
+    function correctAnswer(){
+
+      setRightWrong("green");
+      incrementCount();
+
+      setTimeout(()=>{
+        setCurrentQuestions(prev => {
+          const nextQustionIndex = (prev + 1) % cocktails.length
+          updatedSelectionsForQuestion(nextQustionIndex);
+          return nextQustionIndex;
+        });
+
+        setRightWrong(null);
+      },200)
+      console.log(count);
+    }
+
+    function updatedSelectionsForQuestion(nextQuestionIndex){
+      const randomQs = randomQuestions(cocktails, 4, nextQuestionIndex);
+      const sortedRandomQs = sortSelection(randomQs);
+      setSelections(sortedRandomQs);
+    }
+
+    function incorrectAnswer(){
+      const timeOut = setTimeout(()=>{
+        setRightWrong("red");
+
+        setTimeout(()=>{
+          setRightWrong(null);
+        },200)
+      },200)
+    }
+
+    function checkAnswer(a){
+      
+      if (a === cocktails[currentQuestion].specs){
+        correctAnswer();
+
+      } else {
+        incorrectAnswer();
+      }
+    }
   return(
     <div className="quizSection">
       {
         cocktails.length === 0 ? <p>Loading</p> : (
-          <>
-          <h3>{cocktails[currentQuestion].cocktail_name}</h3>
+          <div className="quizSection-bg" >
+          <h3 style={{background:rightWrong, transition:"all, .5s"}}>{cocktails[currentQuestion].cocktail_name}</h3>
           <div className="quiz-section-options">
-          <p>{selections[0]}</p>
-          <p>{selections[1]}</p>
-          <p>{selections[2]}</p>
-          <p>{selections[3]}</p>
-          
+          {
+            selections.map((a,i)=>{
+              return(
+                <p key={i} onClick={()=>{
+                  checkAnswer(a);
+                }}>{a}</p>
+              )
+            })
+          }
           </div>
+
           <button>Click me</button>
-          </>
+          </div>
         )
       }
     </div>

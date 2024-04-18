@@ -68,7 +68,7 @@ export default function Quiz(){
     setTimerVis("visible");
     setBtnClicked(true);
     setNameVis("hidden");
-    setTimer(2);
+    setTimer(50);
 
       intervalIdRef.current = setInterval(() => {
     setTimer(prevTimer => {

@@ -23,22 +23,18 @@ body{
 
 .nav {
   padding:30px;
-  width:100%;
+  width:90%;
+  margin-inline: auto;
   max-width: 600px;
   display:flex;
   justify-content:space-between;
   align-items: center;
   margin:auto;
-  position:sticky;
-
 }
 
 .nav ul {
   display:flex;
-  gap:100px;
-  width:100%;
   justify-content: center;
-  text-align: center;
 }
 
 .nav ul a{
